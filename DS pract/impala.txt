@@ -1,0 +1,33 @@
+INSTALLING IMAPALA
+1. INSTALL DOCKER
+# Update system packages
+
+sudo apt update
+
+# Install prerequisites
+sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+
+# Add Docker’s official GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+# Add Docker APT repository
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  
+# Update package index again
+sudo apt update
+
+# Install Docker
+sudo apt install docker-ce -y
+
+# Start Docker and enable it to launch at boot
+sudo systemctl start docker
+sudo systemctl enable docker
+
+#Add current user to docker group so you don't need sudo
+sudo usermod -aG docker $USER
+
+2. docker pull josemyd/all-in-one-impala-kudu
+3. docker run -it --name impala-kudu-container josemyd/all-in-one-impala-kudu
+4. docker exec -it impala-kudu-container impala-shell
